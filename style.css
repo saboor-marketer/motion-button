@@ -1,0 +1,399 @@
+/* Base styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.motion-lab {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.lab-title {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.lab-subtitle {
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+/* Demo Card */
+.demo-card {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Chat UI */
+.chat-ui {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem 1.5rem;
+}
+
+.chat-title {
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.chat-body {
+    padding: 1.5rem;
+}
+
+.message-input-container {
+    margin-bottom: 1.5rem;
+}
+
+.message-input {
+    width: 100%;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1rem;
+    resize: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+    font-family: inherit;
+}
+
+.message-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Send Button - Core Styles */
+.send-button {
+    position: relative;
+    min-width: 120px;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.send-button > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 200ms ease, transform 200ms ease;
+}
+
+/* State: Idle */
+.send-button[data-state="idle"] .button-label {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+/* State: Hover/Focus */
+.send-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.send-button:not(:disabled):active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Focus state for keyboard accessibility */
+.send-button:focus-visible {
+    outline: 3px solid #667eea;
+    outline-offset: 3px;
+}
+
+/* State: Loading */
+.send-button[data-state="loading"] {
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+}
+
+.send-button[data-state="loading"] .button-loading {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.send-button[data-state="loading"] .button-label {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+
+/* Spinner animation */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* State: Success */
+.send-button[data-state="success"] {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    cursor: default;
+}
+
+.send-button[data-state="success"] .button-success {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.send-button[data-state="success"] .button-loading {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+
+.send-button[data-state="success"] .checkmark {
+    display: inline-block;
+    animation: checkmarkScale 220ms ease forwards;
+}
+
+@keyframes checkmarkScale {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* State: Error */
+.send-button[data-state="error"] {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    cursor: pointer;
+}
+
+.send-button[data-state="error"] .button-error {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.send-button[data-state="error"] .button-loading {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+
+.send-button[data-state="error"]:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+}
+
+/* Error shake animation */
+.send-button[data-state="error"] .button-error {
+    animation: shake 350ms ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translate(-50%, -50%); }
+    20% { transform: translate(calc(-50% - 6px), -50%); }
+    40% { transform: translate(calc(-50% + 6px), -50%); }
+    60% { transform: translate(calc(-50% - 4px), -50%); }
+    80% { transform: translate(calc(-50% + 4px), -50%); }
+}
+
+/* State: Disabled */
+.send-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+}
+
+.send-button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Test Controls */
+.test-controls {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+}
+
+.controls-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.control-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* States Indicator */
+.states-indicator {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+}
+
+.states-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.states-list {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.state-dot {
+    font-size: 0.875rem;
+    color: #adb5bd;
+    transition: color 200ms ease;
+}
+
+.state-dot.active {
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Motion Notes */
+.motion-notes {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.notes-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.notes-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.notes-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .send-button:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .send-button:active {
+        transform: none;
+    }
+
+    .send-button[data-state="error"] .button-error {
+        animation: none;
+    }
+
+    .send-button[data-state="success"] .checkmark {
+        animation: none;
+    }
+
+    .spinner {
+        animation: none;
+        border-top-color: white;
+    }
+
+    /* Preserve state feedback without motion */
+    .send-button[data-state="loading"] .button-loading,
+    .send-button[data-state="success"] .button-success,
+    .send-button[data-state="error"] .button-error {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .motion-lab {
+        padding: 1.5rem;
+    }
+
+    .lab-title {
+        font-size: 1.5rem;
+    }
+
+    .states-list {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .control-buttons {
+        flex-direction: column;
+    }
+
+    .control-buttons button {
+        width: 100%;
+    }
+}
